@@ -8,14 +8,14 @@
 - What did you change?  I moved the shared code to an abstract class called ReportGenerator.
 - Why did you choose that approach?  The abstract class keeps the steps in one place, and each exporter only formats the report.
 
-- An abstract class is better than interface because all exporters share the same export steps. 
-- It keeps these steps in one place and lets each exporter implement only its own format. 
-- An interface defines a contract, but it does not share this common implementation in the same way.
+An abstract class is better than interface because all exporters share the same export steps. 
+It keeps these steps in one place and lets each exporter implement only its own format. 
+An interface defines a contract, but it does not share this common implementation in the same way.
 
 ---
 
 ## Enrollment
 
-- What was the problem?
-- What did you change?
-- Why did you choose that approach?
+- What was the problem? Program.cs called four services one by one.
+- What did you change?  I added an EnrollmentFacade to handle all four services.
+- Why did you choose that approach? The Facade makes enrollment easier with one method call.

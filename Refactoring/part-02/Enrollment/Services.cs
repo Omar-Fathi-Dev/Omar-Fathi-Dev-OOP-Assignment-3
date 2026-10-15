@@ -27,3 +27,5 @@ public class EmailService
     public void Send(string studentId, string subject, string body) =>
         Console.WriteLine($"email {studentId}: {subject} / {body}");
 }
+
+
