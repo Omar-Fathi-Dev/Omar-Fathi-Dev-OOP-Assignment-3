@@ -57,3 +57,12 @@ Use `Dictionary` when:
 
 - You need fast lookups by key.
 - You do not need the keys to be sorted.
+
+## Task 2.2 — Pick the Collection
+
+- **S1 — Dictionary:** I use `Dictionary` because I can find a student by national ID very fast.
+- **S2 — HashSet:** I use `HashSet` because it does not store the same tag twice.
+- **S3 — List:** I use `List` because it keeps grades in the same order and allows the same grade more than once.
+- **S4 — IReadOnlyDictionary:** I use `IReadOnlyDictionary` because callers can read prices but cannot add or change items through this interface.
+- **S5 — SortedDictionary:** I use `SortedDictionary` because it keeps sessions in time order.
+- **S6 — IEnumerable:** I use `IEnumerable` because the caller can get results one by one and stop early.
