@@ -6,89 +6,57 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Student student1 = new Student() { Id = 1, Name = "Omar" };
-        // Student student2 = new Student() { Id = 2, Name = "Amr" };
-        //
-        // Store<Student> studentStore = new Store<Student>();
-        // studentStore.Add(student1);
-        // studentStore.Add(student2);
-        //
-        // IReadOnlyDictionary<int, Student> students = studentStore.GetAll();
-        //
-        // Console.WriteLine("=== Students ===");
-        //
-        // foreach (KeyValuePair<int, Student> entry in students)
-        //     Console.WriteLine(entry.Value);
-        //
-        // Console.WriteLine($"Found: {studentStore.GetById(1)}");
-        //
-        // Console.WriteLine($"Removed: {studentStore.Remove(1)}");
-        //
-        // Console.WriteLine("=== Students After Removal ===");
-        //
-        // foreach (KeyValuePair<int, Student> entry in studentStore.GetAll())
-        //     Console.WriteLine(entry.Value);
-        //
-        //
-        // Course course1 = new Course() { Id = 1, Title = "C# Fundamentals", Price = 1500 };
-        // Course course2 = new Course() { Id = 2, Title = "ASP.NET Core", Price = 2500 };
-        //
-        // Store<Course> courseStore = new Store<Course>();
-        // courseStore.Add(course1);
-        // courseStore.Add(course2);
-        //
-        // IReadOnlyDictionary<int, Course> courses = courseStore.GetAll();
-        //
-        // Console.WriteLine("\n=== Courses ===");
-        //
-        // foreach (KeyValuePair<int, Course> entry in courses)
-        //     Console.WriteLine(entry.Value);
-        //
-        // Console.WriteLine($"Found: {courseStore.GetById(1)}");
-        //
-        // Console.WriteLine($"Removed: {courseStore.Remove(1)}");
-        //
-        // Console.WriteLine("=== Courses After Removal ===");
-        //
-        // foreach (KeyValuePair<int, Course> entry in courseStore.GetAll())
-        //     Console.WriteLine(entry.Value);
-        
-        
-        Student student1 = new Student() { Id = 1, Name = "Omar" };
-        Student student2 = new Student() { Id = 2, Name = "Amr" };
-        Student student3 = new Student() { Id = 3, Name = "Ali" };
-        Student student4 = new Student() { Id = 4, Name = "Ahmed" };
-        Student student5 = new Student() { Id = 5, Name = "Mina" };
+        Store<Student> studentStore = new Store<Student>();
+        studentStore.Add(new Student { Id = 1, Name = "Omar" });
+        studentStore.Add(new Student { Id = 2, Name = "Amr" });
+        studentStore.Add(new Student { Id = 3, Name = "Ali" });
+        studentStore.Add(new Student { Id = 4, Name = "Ahmed" });
+        studentStore.Add(new Student { Id = 5, Name = "Mina" });
 
-        List<Student> students = new List<Student>
+        Store<Course> courseStore = new Store<Course>();
+        courseStore.Add(new Course { Id = 101, Title = "C#", Price = 1500 });
+        courseStore.Add(new Course { Id = 102, Title = "ASP.NET Core", Price = 2500 });
+        courseStore.Add(new Course { Id = 103, Title = "SQL Server", Price = 1000 });
+
+        Student? student = studentStore.GetById(3);
+        Course? course = courseStore.GetById(102);
+
+        Console.WriteLine("=== Student ===");
+        Console.WriteLine(student?.ToString() ?? "Student not found");
+
+        Console.WriteLine("\n=== Course ===");
+        Console.WriteLine(course?.ToString() ?? "Course not found");
+        
+        
+        try
         {
-            student1, student2, student3, student4, student5
+            studentStore.Add(new Student { Id = 3, Name = "Duplicate Student" });
+        }
+        catch (ArgumentException exception)
+        {
+            Console.WriteLine($"Exception: {exception.Message}");
+        }
+        
+        
+        Console.WriteLine("=== Students: Page 2 (Size 2) ===");
+
+        foreach (Student std in studentStore.GetAll().Values.Page(2, 2))
+        {
+            Console.WriteLine(std);
+        }
+
+        List<Course> courses = new List<Course>
+        {
+            new Course { Id = 101, Title = "C#", Price = 1500 },
+            new Course { Id = 102, Title = "ASP.NET Core", Price = 2500 },
+            new Course { Id = 103, Title = "SQL Server", Price = 1000 }
         };
 
-        Console.WriteLine("=== Page: Page 2, Size 2 ===");
+        Console.WriteLine("\n=== FindById on List<Course>: Id = 102 ===");
 
-        foreach (Student student in students.Page(2, 2))
-            Console.WriteLine(student);
+        Course? foundCourse = courses.FindById(102);
+        Console.WriteLine(foundCourse?.ToString() ?? "Course not found");
 
-
-        Console.WriteLine("\n=== FindById: Id = 3 ===");
-
-        Student? foundStudent = students.FindById(3);
-        Console.WriteLine(foundStudent?.ToString() ?? "Student not found");
-
-
-        Console.WriteLine("\n=== FindById: Id = 10 ===");
-
-        Student? missingStudent = students.FindById(10);
-        Console.WriteLine(missingStudent?.ToString() ?? "Student not found");
-
-
-        Console.WriteLine("\n=== ToIdDictionary ===");
-
-        IReadOnlyDictionary<int, Student> studentDictionary =
-            students.ToIdDictionary();
-
-        foreach (KeyValuePair<int, Student> entry in studentDictionary)
-            Console.WriteLine($"Key: {entry.Key}, Value: {entry.Value}");
+        // new Store<string>(); // must NOT compile
     }
 }

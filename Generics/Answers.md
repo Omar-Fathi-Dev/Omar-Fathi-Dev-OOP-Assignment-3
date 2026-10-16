@@ -24,3 +24,14 @@ The main difference is the type of object each store manages. The store logic is
 ### Explanation
 
 The compiler does not know what type `T` will be. It can be a `Student`, a `Course`, or another type. Not every type has an `Id` property, so the compiler cannot allow `item.Id` without knowing that `T` supports it.
+
+
+### Why `Store<string>` Must Not Compile
+
+`Store<T>` has the generic constraints `where T : class, IHasId`.
+
+Although `string` is a reference type, it does not implement `IHasId`. Therefore, `Store<string>` violates the generic constraints and causes a compile-time error.
+
+```csharp
+// new Store<string>(); // must NOT compile
+```
