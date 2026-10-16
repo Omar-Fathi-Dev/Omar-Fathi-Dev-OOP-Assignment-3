@@ -12,12 +12,12 @@ class Program
         studentStore.Add(student1);
         studentStore.Add(student2);
 
-        IReadOnlyList<Student> students = studentStore.GetAll();
+        IReadOnlyDictionary<int, Student> students = studentStore.GetAll();
 
         Console.WriteLine("=== Students ===");
 
-        foreach (Student student in students)
-            Console.WriteLine(student);
+        foreach (KeyValuePair<int, Student> entry in students)
+            Console.WriteLine(entry.Value);
 
         Console.WriteLine($"Found: {studentStore.GetById(1)}");
 
@@ -25,8 +25,8 @@ class Program
 
         Console.WriteLine("=== Students After Removal ===");
 
-        foreach (Student student in studentStore.GetAll())
-            Console.WriteLine(student);
+        foreach (KeyValuePair<int, Student> entry in studentStore.GetAll())
+            Console.WriteLine(entry.Value);
 
 
         Course course1 = new Course() { Id = 1, Title = "C# Fundamentals", Price = 1500 };
@@ -36,12 +36,12 @@ class Program
         courseStore.Add(course1);
         courseStore.Add(course2);
 
-        IReadOnlyList<Course> courses = courseStore.GetAll();
+        IReadOnlyDictionary<int, Course> courses = courseStore.GetAll();
 
         Console.WriteLine("\n=== Courses ===");
 
-        foreach (Course course in courses)
-            Console.WriteLine(course);
+        foreach (KeyValuePair<int, Course> entry in courses)
+            Console.WriteLine(entry.Value);
 
         Console.WriteLine($"Found: {courseStore.GetById(1)}");
 
@@ -49,8 +49,7 @@ class Program
 
         Console.WriteLine("=== Courses After Removal ===");
 
-        foreach (Course course in courseStore.GetAll())
-            Console.WriteLine(course);
-
+        foreach (KeyValuePair<int, Course> entry in courseStore.GetAll())
+            Console.WriteLine(entry.Value);
     }
 }

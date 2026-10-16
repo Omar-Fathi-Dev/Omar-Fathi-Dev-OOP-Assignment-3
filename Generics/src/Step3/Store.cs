@@ -2,32 +2,24 @@
 
 public class Store<T>  where T :class , IHasId
 {
-    private List<T> _items = new();
-    public IReadOnlyList<T> Items => _items.AsReadOnly();
+    private Dictionary<int , T> _items = new();
+    public IReadOnlyDictionary<int, T> Items => _items;
     
     public void Add(T item)
     {
-        if(item is  null)
+        if (item is null)
             throw new ArgumentNullException(nameof(item));
-        
-        _items.Add(item);
+
+        if (!_items.TryAdd(item.Id, item))
+            throw new ArgumentException($"An item with Id {item.Id} already exists.", nameof(item));
     }
 
-    public T? GetById(int Id) 
-    {
-        foreach (var item in _items)
-            if (item.Id == Id)
-                return item;
-        
-        return null;
-    }
+    public T? GetById(int Id)
+        => _items.TryGetValue(Id, out T? item) ? item : null;
     
-    public IReadOnlyList<T> GetAll() => Items;
+    public IReadOnlyDictionary<int , T> GetAll() => Items;
 
     public bool Remove(int id)
-    {
-        T? item = GetById(id);
-        return _items.Remove(item);
-    }
+        => _items.Remove(id);
 
 }
