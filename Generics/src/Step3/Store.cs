@@ -1,6 +1,6 @@
 ﻿namespace GenericStore.Step3;
 
-public class Store<T>
+public class Store<T>  where T :class , IHasId
 {
     private List<T> _items = new();
     public IReadOnlyList<T> Items => _items.AsReadOnly();
@@ -13,7 +13,7 @@ public class Store<T>
         _items.Add(item);
     }
 
-    public T? GetById(int Id)
+    public T? GetById(int Id) 
     {
         foreach (var item in _items)
             if (item.Id == Id)

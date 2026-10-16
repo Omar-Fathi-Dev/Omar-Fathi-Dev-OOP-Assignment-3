@@ -1,6 +1,6 @@
 ﻿namespace GenericStore;
 
-public class Course
+public class Course : IHasId
 {
     public int Id
     {
@@ -36,5 +36,10 @@ public class Course
             
             field = value;
         }
+    }
+    
+    public override string ToString()
+    {
+        return $"Id: {Id}, Title: {Title}, Price: {Price}";
     }
 }
